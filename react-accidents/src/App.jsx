@@ -6,18 +6,23 @@ import {
 } from 'recharts';
 
 function prepareSimpleChartData(data){ //helper function
-  const yearlyCounts = {};
+  const totalsByYear = {};
   data.forEach(item =>{
     const year = item.year;
-    const count = parseInt(item.number_of_accidents, 10);
+    const number = parseInt(item.number_of_accidents, 10); //obtain number from string
 
-    if(!yearlyCounts[year]){
-      yearlyCounts[year] = { year,total:0};
+    if(!totalsByYear[year]){
+      totalsByYear[year] = { 
+        year:year,
+        total:0 
+      };
     }
-    yearlyCounts[year].total += count;
+    totalsByYear[year].total += number;
   });
+  const result = Object.values(totalsByYear);
+  result.sort((a,b) => a.year.localeCompare(b.year));
 
-  return Object.values(yearlyCounts).sort((a,b)=> a.year.localeCompare(b.year));
+  return result;
 }
 
 function App() {
