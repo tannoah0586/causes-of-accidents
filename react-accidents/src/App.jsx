@@ -70,7 +70,7 @@ function App() {
           <table>
             <caption className='sr-only'>Filtered accident datatable</caption>
             <thead>
-              <tr>                          //table row
+              <tr>                        
                 <th>Year</th>
                 <th>Classification</th>
                 <th>Road User Group</th>
@@ -81,10 +81,10 @@ function App() {
             <tbody>
               {filteredData.map((item)=>(
                 <tr key={item._id}>
-                  <td>{item.year}</td>        //table data cell
+                  <td>{item.year}</td>       
                   <td>{item.accident_classification}</td>
                   <td>{item.road_user_group}</td>
-                  <td>{item.causes_of_accidents}</td>
+                  <td>{item.causes_of_accident}</td>
                   <td>{item.number_of_accidents}</td>
                 </tr>
               ))}
