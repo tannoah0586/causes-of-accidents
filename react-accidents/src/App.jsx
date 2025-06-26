@@ -1,6 +1,24 @@
 import { useState } from 'react'
 import useAccidentData from './hooks/useAccidentData';
 import './App.css'
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
+} from 'recharts';
+
+function prepareSimpleChartData(data){ //helper function
+  const yearlyCounts = {};
+  data.forEach(item =>{
+    const year = item.year;
+    const count = parseInt(item.number_of_accidents, 10);
+
+    if(!yearlyCounts[year]){
+      yearlyCounts[year] = { year,total:0};
+    }
+    yearlyCounts[year].total += count;
+  });
+
+  return Object.values(yearlyCounts).sort((a,b)=> a.year.localeCompare(b.year));
+}
 
 function App() {
   const {data,loading} = useAccidentData();
@@ -10,6 +28,7 @@ function App() {
   const filteredData = selectedSeverity
     ? data.filter(item => item.accident_classification === selectedSeverity) 
     : data;
+  const chartData = prepareSimpleChartData(filteredData);
 
   return (
     <main>
@@ -34,11 +53,24 @@ function App() {
         Showing <strong>{filteredData.length}</strong> records
         {selectedSeverity && ` for "${selectedSeverity}"`}
       </p>
-      {/* <pre>{JSON.stringify(filteredData.slice(0, 10), null, 2)}</pre> */}
+        <LineChart
+          width={600}
+          height={300}
+          data={chartData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="year" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="total" stroke="#8884d8" strokeWidth={2} />
+        </LineChart>
+
           <table>
             <caption className='sr-only'>Filtered accident datatable</caption>
             <thead>
-              <tr>.                         //table row
+              <tr>                          //table row
                 <th>Year</th>
                 <th>Classification</th>
                 <th>Road User Group</th>
@@ -58,7 +90,7 @@ function App() {
               ))}
             </tbody>
           </table>
-
+        <h2>Line Chart: Total Accidents by Year</h2>
 
     </main>
   )
