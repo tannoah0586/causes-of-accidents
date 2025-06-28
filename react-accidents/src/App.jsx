@@ -56,13 +56,12 @@ function App() {
       </label>
       <p>
         Showing <strong>{filteredData.length}</strong> records
-        {selectedSeverity && ` for "${selectedSeverity}"`}
       </p>
         <LineChart
-          width={600}
-          height={300}
+          width={800}
+          height={450}
           data={chartData}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 30, right: 30, left: 30, bottom: 10 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />

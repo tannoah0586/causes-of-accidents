@@ -19,8 +19,3 @@ tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Visually hidden text for screen readers */
-.sr-only {
-  position: absolute;
-  left: -9999px;
-}
